@@ -1,0 +1,30 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+allprojects {
+  apply plugin: 'maven-publish'
+  publishing {
+    publications {
+      mavenJava(MavenPublication) {
+        from components.java
+      }
+    }
+  }
+}
+
+test {
+  systemProperty 'orgValue', project.orgValue
+}
+
+dependencies {
+  compile('com.google.guava:guava:21.0')
+  compile('org.apache.commons:commons-lang3:3.5')
+}
+
+task checkOrgValue {
+  doLast {
+    println '****************************'
+    println "OrgValue: ${project.test.systemProperties['orgValue']}"
+    println '****************************'
+  }
+}
